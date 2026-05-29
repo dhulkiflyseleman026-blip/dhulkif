@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zuri Carwash & Garage – Tanzania</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #0a1628;
+    --blue: #0d2b5e;
+    --accent: #1a6bff;
+    --sky: #3b9eff;
+    --gold: #f0b429;
+    --white: #f4f8ff;
+    --light: #e8f0fe;
+    --muted: #8aa0c0;
+    --card: #0f1e3d;
+    --border: rgba(59,158,255,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+  header { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; overflow: hidden; }
+  header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,107,255,0.25) 0%, transparent 70%), linear-gradient(180deg, #0a1628 0%, #071020 100%); z-index: 0; }
+  .grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(59,158,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(59,158,255,0.06) 1px, transparent 1px); background-size: 40px 40px; z-index: 0; }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .badge { display: inline-block; background: rgba(26,107,255,0.18); border: 1px solid var(--border); color: var(--sky); font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; letter-spacing: 0.2em; padding: 0.35rem 1rem; border-radius: 2rem; margin-bottom: 1.5rem; text-transform: uppercase; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 12vw, 7rem); line-height: 0.92; letter-spacing: 0.02em; background: linear-gradient(135deg, #ffffff 30%, var(--sky) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.6rem, 5vw, 2.8rem); color: var(--gold); letter-spacing: 0.12em; margin-top: 0.3rem; }
+  .hero-desc { margin-top: 1.2rem; color: var(--muted); font-size: 1rem; line-height: 1.7; }
+  .hero-cta { margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--sky)); color: #fff; border: none; padding: 0.9rem 2.2rem; border-radius: 3px; font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; }
+  .btn-outline { background: transparent; color: var(--white); border: 1px solid var(--border); padding: 0.9rem 2.2rem; border-radius: 3px; font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(10,22,40,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.08em; color: var(--white); text-decoration: none; }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+
+  section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sky); margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1; letter-spacing: 0.03em; margin-bottom: 1rem; }
+  .section-title span { color: var(--gold); }
+
+  .service-tabs { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .tab-btn { background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted); padding: 0.5rem 1.2rem; border-radius: 2rem; font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+  .tab-btn.active, .tab-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .service-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+  .service-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; cursor: pointer; position: relative; transition: all 0.2s; }
+  .service-card:hover, .service-card.selected { border-color: var(--accent); transform: translateY(-3px); }
+  .service-card.selected { background: rgba(26,107,255,0.1); }
+  .service-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--white); margin-bottom: 0.4rem; }
+  .service-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; color: var(--gold); }
+  .service-check { position: absolute; top: 1rem; right: 1rem; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; opacity: 0; }
+  .service-card.selected .service-check { opacity: 1; }
+
+  .payment-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  @media(max-width: 768px) { .payment-wrapper { grid-template-columns: 1fr; } .nav-links { display: none; } }
+
+  .order-summary, .payment-form-box { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; }
+  .summary-item { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+  .summary-total { display: flex; justify-content: space-between; align-items: center; margin-top: 1.2rem; padding-top: 1rem; border-top: 2px solid var(--accent); }
+  .summary-total .amount { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--white); }
+  .empty-state { text-align: center; padding: 2.5rem 0; color: var(--muted); }
+
+  .form-group { margin-bottom: 1.4rem; }
+  label { display: block; font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sky); margin-bottom: 0.5rem; }
+  input, select { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--white); padding: 0.85rem 1rem; border-radius: 5px; font-size: 0.95rem; outline: none; }
+  
+  .mno-hint { font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; display: none; }
+  .mno-hint.visible { display: block; }
+
+  .pay-btn { width: 100%; background: linear-gradient(135deg, var(--accent), var(--sky)); color: #fff; border: none; padding: 1.05rem; border-radius: 5px; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
+  .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+  .pay-btn.loading .spinner { display: block; }
+  .pay-btn.loading .btn-text { display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.5rem; max-width: 320px; z-index: 999; transform: translateY(100px); opacity: 0; transition: all 0.35s ease; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-color: #22c55e; }
+  .toast.error { border-color: #ef4444; }
+
+  .highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 4rem; width: 100%; }
+  .highlight { text-align: center; padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.02); }
+  .highlight .num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--sky); }
+  .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 4rem auto; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">ZURI<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#payment">Pay Now</a></li>
+  </ul>
+  <a href="#payment" class="btn-primary" style="padding:0.55rem 1.3rem; font-size:0.85rem;">Book & Pay</a>
+</nav>
+
+<header>
+  <div class="grid-bg"></div>
+  <div class="hero-content">
+    <span class="badge">📍 Tanzania • Premium Auto Care</span>
+    <h1 class="hero-title">ZURI<br>CARWASH</h1>
+    <p class="hero-sub">& Garage</p>
+    <p class="hero-desc">Select your cleaning options below, then complete validation via mobile money securely.</p>
+    <div class="hero-cta">
+      <a href="#services" class="btn-primary">View Services</a>
+      <a href="#payment" class="btn-outline">Pay Now</a>
+    </div>
+  </div>
+
+  <div class="highlights">
+    <div class="highlight"><div class="num">12+</div><div class="lbl">Services Available</div></div>
+    <div class="highlight"><div class="num">100%</div><div class="lbl">Mobile Money</div></div>
+    <div class="highlight"><div class="num">TZS</div><div class="lbl">Tanzanian Shilling</div></div>
+    <div class="highlight"><div class="num">✓</div><div class="lbl">Secure Payments</div></div>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<section id="services">
+  <div style="margin-bottom: 3rem;">
+    <p class="section-label">What We Offer</p>
+    <h2 class="section-title">Our <span>Services</span></h2>
+  </div>
+
+  <div class="service-tabs">
+    <button class="tab-btn active" onclick="filterServices('all', event)">All Services</button>
+    <button class="tab-btn" onclick="filterServices('motorcycle', event)">🏍️ Motorcycle</button>
+    <button class="tab-btn" onclick="filterServices('bajaj', event)">🛺 Bajaj</button>
+    <button class="tab-btn" onclick="filterServices('car', event)">🚗 Car</button>
+    <button class="tab-btn" onclick="filterServices('carpet', event)">🪣 Carpet</button>
+  </div>
+
+  <div class="service-grid" id="serviceGrid"></div>
+</section>
+
+<div class="divider"></div>
+
+<section id="payment">
+  <p class="section-label">Checkout</p>
+  <h2 class="section-title">Pay <span>Securely</span></h2>
+
+  <div class="payment-wrapper">
+    <div class="order-summary">
+      <p style="color:var(--sky); font-weight:600; margin-bottom:1rem;">📋 Order Summary</p>
+      <div id="summaryItems">
+        <div class="empty-state"><p>No services selected yet.</p></div>
+      </div>
+      <div id="summaryTotal" style="display:none;">
+        <div class="summary-total">
+          <span>Total</span>
+          <span class="amount" id="totalAmount">TZS 0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-form-box">
+      <div class="form-group">
+        <label for="custName">Full Name</label>
+        <input type="text" id="custName" placeholder="John Doe"/>
+      </div>
+      <div class="form-group">
+        <label for="phone">Mobile Money Number</label>
+        <input type="tel" id="phone" placeholder="255712345678" maxlength="15"/>
+        <p class="mno-hint" id="mnoHint"></p>
+      </div>
+      <div class="form-group">
+        <label for="mno">Mobile Network</label>
+        <select id="mno">
+          <option value="">— Select Network —</option>
+          <option value="VODACOM_TZA">Vodacom (M-Pesa)</option>
+          <option value="AIRTEL_TZA">Airtel Money</option>
+          <option value="TIGO_TZA">Tigo Pesa</option>
+          <option value="HALOTEL_TZA">Halopesa</option>
+        </select>
+      </div>
+
+      <button class="pay-btn" id="payBtn" onclick="initiatePayment()" disabled>
+        <span class="spinner"></span>
+        <span class="btn-text">🔒 Pay Securely</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SERVICES = [
+  { id:'moto1',    name:'Pressure Motorcycle Wash',        price:1000,  cat:'motorcycle' },
+  { id:'moto2',    name:'Full Motorcycle Wash',            price:2000,  cat:'motorcycle' },
+  { id:'bajaj1',   name:'Pressure Bajaj Wash',             price:1500,  cat:'bajaj' },
+  { id:'car1',     name:'Pressure Car Wash',               price:4000,  cat:'car' },
+  { id:'car2',     name:'Premium Car Wash',                price:10000, cat:'car' },
+  { id:'carpet1',  name:'Big Carpet Wash',                 price:25000, cat:'carpet' }
+];
+
+let selected = new Set();
+let currentFilter = 'all';
+
+function fmt(n) { return 'TZS ' + n.toLocaleString('en-TZ'); }
+
+function renderGrid() {
+  const grid = document.getElementById('serviceGrid');
+  const visible = currentFilter === 'all' ? SERVICES : SERVICES.filter(s => s.cat === currentFilter);
+  grid.innerHTML = visible.map(s => `
+    <div class="service-card ${selected.has(s.id) ? 'selected' : ''}" onclick="toggleService('${s.id}')">
+      <p class="service-name">${s.name}</p>
+      <p class="service-price">${fmt(s.price)}</p>
+      <span class="service-check">✓</span>
+    </div>
+  `).join('');
+}
+
+function toggleService(id) {
+  if (selected.has(id)) selected.delete(id); else selected.add(id);
+  renderGrid();
+  updateSummary();
+}
+
+function filterServices(cat, e) {
+  currentFilter = cat;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  renderGrid();
+}
+
+function updateSummary() {
+  const items = [...selected].map(id => SERVICES.find(s => s.id === id));
+  const total = items.reduce((sum, s) => sum + s.price, 0);
+  const container = document.getElementById('summaryItems');
+  const totalEl = document.getElementById('summaryTotal');
+  const totalAmt = document.getElementById('totalAmount');
+  const payBtn = document.getElementById('payBtn');
+
+  if (!items.length) {
+    container.innerHTML = '<div class="empty-state"><p>No services selected yet.</p></div>';
+    totalEl.style.display = 'none';
+    payBtn.disabled = true;
+    return;
+  }
+
+  container.innerHTML = items.map(s => `<div class="summary-item"><span class="name">${s.name}</span><span class="price">${fmt(s.price)}</span></div>`).join('');
+  totalEl.style.display = 'block';
+  totalAmt.textContent = fmt(total);
+  payBtn.disabled = false;
+}
+
+document.getElementById('phone').addEventListener('input', (e) => {
+  const val = e.target.value.replace(/\D/g, '');
+  const mno = document.getElementById('mno');
+  const hint = document.getElementById('mnoHint');
+  
+  if (val.startsWith('25565') || val.startsWith('25571')) {
+    mno.value = 'TIGO_TZA';
+    hint.textContent = "📡 Auto-detected: Tigo Pesa";
+    hint.className = "mno-hint visible";
+  } else if (val.startsWith('25575') || val.startsWith('2556')) {
+    mno.value = 'VODACOM_TZA';
+    hint.textContent = "📡 Auto-detected: Vodacom M-Pesa";
+    hint.className = "mno-hint visible";
+  } else if (val.startsWith('25578') || val.startsWith('25567')) {
+    mno.value = 'AIRTEL_TZA';
+    hint.textContent = "📡 Auto-detected: Airtel Money";
+    hint.className = "mno-hint visible";
+  } else {
+    hint.className = "mno-hint";
+  }
+});
+
+async function initiatePayment() {
+  const name = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('phone').value.trim().replace(/\D/g,'');
+  const btn = document.getElementById('payBtn');
+
+  if (!name || phone.length < 12) {
+    return showToast('Please enter a valid name and phone number with 255 country code.', 'error');
+  }
+
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  try {
+    // SECURITY WARNING REMINDER: Direct frontend calls expose keys on GitHub.
+    // This script targets '/api/create-checkout' relative to your production environment server.
+    // If you are using a static host like GitHub Pages or Tiiny.site without a server,
+    // this fetch will fail unless it's pointing to your live backend endpoint.
+    
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: [...selected].map(id => SERVICES.find(s => s.id === id)).reduce((sum, s) => sum + s.price, 0),
+        phone: phone,
+        name: name,
+        statementDescription: 'ZuriCarwash',
+        returnUrl: window.location.origin
+      })
+    });
+
+    const data = await res.json();
+    if (data.redirectUrl) {
+      showToast('Redirecting to secure window...', 'success');
+      window.location.href = data.redirectUrl;
+    } else {
+      throw new Error(data.error || 'Checkout session declaration failed.');
+    }
+  } catch (err) {
+    showToast('Backend connection error: Ensure server.js is running and connected.', 'error');
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+document.addEventListener('DOMContentLoaded', renderGrid);
+</script>
+</body>
+</html>
