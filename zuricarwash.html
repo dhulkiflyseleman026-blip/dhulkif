@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zuri Carwash &amp; Garage &ndash; Tanzania</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy:   #0a1628;
+    --accent: #1a6bff;
+    --sky:    #3b9eff;
+    --gold:   #f0b429;
+    --white:  #f4f8ff;
+    --light:  #e8f0fe;
+    --muted:  #8aa0c0;
+    --card:   #0f1e3d;
+    --border: rgba(59,158,255,0.18);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(10,22,40,0.88); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.08em; color: var(--white); text-decoration: none; }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; font-weight: 500; }
+  .nav-links a:hover { color: var(--white); }
+
+  header {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 2rem; overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,107,255,0.25) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 80% 80%, rgba(26,107,255,0.12) 0%, transparent 60%),
+                linear-gradient(180deg, #0a1628 0%, #071020 100%);
+    z-index: 0;
+  }
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(59,158,255,0.06) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(59,158,255,0.06) 1px, transparent 1px);
+    background-size: 40px 40px; z-index: 0;
+  }
+  .water-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(59,158,255,0.15); animation: pulse-ring 4s ease-out infinite; }
+  .water-ring:nth-child(1) { width:300px; height:300px; top:10%; left:60%; animation-delay:0s; }
+  .water-ring:nth-child(2) { width:500px; height:500px; top:5%;  left:55%; animation-delay:1s; }
+  .water-ring:nth-child(3) { width:700px; height:700px; top:-5%; left:45%; animation-delay:2s; }
+  @keyframes pulse-ring { 0% { opacity:.6; transform:scale(.95); } 100% { opacity:0; transform:scale(1.05); } }
+
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .badge { display:inline-block; background:rgba(26,107,255,0.18); border:1px solid var(--border); color:var(--sky); font-family:'Rajdhani',sans-serif; font-size:.78rem; letter-spacing:.2em; padding:.35rem 1rem; border-radius:2rem; margin-bottom:1.5rem; text-transform:uppercase; animation:fadeUp .8s ease both; }
+  .hero-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(3.5rem,12vw,7rem); line-height:.92; letter-spacing:.02em; background:linear-gradient(135deg,#fff 30%,var(--sky) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:fadeUp .8s .15s ease both; }
+  .hero-sub { font-family:'Bebas Neue',sans-serif; font-size:clamp(1.6rem,5vw,2.8rem); color:var(--gold); letter-spacing:.12em; margin-top:.3rem; animation:fadeUp .8s .25s ease both; }
+  .hero-desc { margin-top:1.2rem; color:var(--muted); font-size:1rem; line-height:1.7; animation:fadeUp .8s .35s ease both; }
+  .hero-cta { margin-top:2.5rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; animation:fadeUp .8s .45s ease both; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+  .btn-primary { background:linear-gradient(135deg,var(--accent),var(--sky)); color:#fff; border:none; padding:.9rem 2.2rem; border-radius:3px; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; transition:transform .2s,box-shadow .2s; text-decoration:none; display:inline-block; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(26,107,255,.4); }
+  .btn-outline { background:transparent; color:var(--white); border:1px solid var(--border); padding:.9rem 2.2rem; border-radius:3px; font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; transition:border-color .2s,background .2s; text-decoration:none; display:inline-block; }
+  .btn-outline:hover { border-color:var(--sky); background:rgba(59,158,255,.08); }
+
+  .highlights { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1.5rem; margin-top:4rem; padding-bottom:2rem; }
+  .highlight { text-align:center; padding:1.5rem; border:1px solid var(--border); border-radius:8px; background:rgba(255,255,255,.02); animation:fadeUp .8s ease both; }
+  .highlight .num { font-family:'Bebas Neue',sans-serif; font-size:3rem; color:var(--sky); letter-spacing:.05em; line-height:1; }
+  .highlight .lbl { font-size:.82rem; color:var(--muted); margin-top:.4rem; }
+
+  .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); }
+
+  section { padding:6rem 2rem; max-width:1100px; margin:0 auto; }
+  .section-label { font-family:'Rajdhani',sans-serif; font-size:.75rem; letter-spacing:.25em; text-transform:uppercase; color:var(--sky); margin-bottom:.8rem; }
+  .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.2rem,6vw,4rem); line-height:1; letter-spacing:.03em; margin-bottom:1rem; }
+  .section-title span { color:var(--gold); }
+
+  .services-header { margin-bottom:3rem; }
+  .service-tabs { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+  .tab-btn { background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--muted); padding:.5rem 1.2rem; border-radius:2rem; font-family:'Rajdhani',sans-serif; font-size:.9rem; font-weight:600; letter-spacing:.05em; cursor:pointer; transition:all .2s; }
+  .tab-btn.active, .tab-btn:hover { background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  .service-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.2rem; }
+  .service-card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1.5rem; cursor:pointer; transition:border-color .2s,transform .2s,box-shadow .2s; position:relative; overflow:hidden; }
+  .service-card::after { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(180deg,var(--accent),var(--sky)); transform:scaleY(0); transform-origin:bottom; transition:transform .25s; }
+  .service-card:hover, .service-card.selected { border-color:var(--accent); transform:translateY(-3px); box-shadow:0 12px 32px rgba(26,107,255,.18); }
+  .service-card:hover::after, .service-card.selected::after { transform:scaleY(1); }
+  .service-card.selected { background:rgba(26,107,255,.1); }
+  .service-icon { font-size:1.8rem; margin-bottom:.8rem; display:block; }
+  .service-name { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:1.05rem; letter-spacing:.04em; color:var(--white); margin-bottom:.4rem; }
+  .service-price { font-family:'Bebas Neue',sans-serif; font-size:1.7rem; color:var(--gold); letter-spacing:.05em; }
+  .service-price span { font-family:'DM Sans',sans-serif; font-size:.8rem; color:var(--muted); font-weight:400; letter-spacing:0; margin-left:.2rem; }
+  .service-check { position:absolute; top:1rem; right:1rem; width:22px; height:22px; border-radius:50%; background:var(--accent); display:flex; align-items:center; justify-content:center; font-size:.75rem; opacity:0; transition:opacity .2s; }
+  .service-card.selected .service-check { opacity:1; }
+
+  #payment { padding-top:4rem; padding-bottom:6rem; }
+  .payment-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+
+  .order-summary { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:2rem; }
+  .summary-title { font-family:'Rajdhani',sans-serif; font-size:.75rem; letter-spacing:.2em; text-transform:uppercase; color:var(--sky); margin-bottom:1.5rem; }
+  .summary-item { display:flex; justify-content:space-between; align-items:center; padding:.75rem 0; border-bottom:1px solid var(--border); font-size:.95rem; }
+  .summary-item:last-of-type { border-bottom:none; }
+  .summary-item .name { color:var(--light); }
+  .summary-item .price { color:var(--gold); font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:600; }
+  .summary-total { display:flex; justify-content:space-between; align-items:center; margin-top:1.2rem; padding-top:1rem; border-top:2px solid var(--accent); }
+  .summary-total .label { font-family:'Rajdhani',sans-serif; font-size:.85rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .summary-total .amount { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:var(--white); letter-spacing:.05em; }
+  .empty-state { text-align:center; padding:2.5rem 0; color:var(--muted); font-size:.9rem; line-height:1.7; }
+  .empty-state .icon { font-size:2.5rem; margin-bottom:.8rem; display:block; }
+
+  .payment-form-box { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:2rem; }
+  .form-title { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:.05em; margin-bottom:.4rem; }
+  .form-sub { color:var(--muted); font-size:.88rem; margin-bottom:2rem; line-height:1.6; }
+  .form-group { margin-bottom:1.4rem; }
+  label { display:block; font-family:'Rajdhani',sans-serif; font-size:.78rem; letter-spacing:.15em; text-transform:uppercase; color:var(--sky); margin-bottom:.5rem; font-weight:600; }
+  input, select { width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border); color:var(--white); padding:.85rem 1rem; border-radius:5px; font-family:'DM Sans',sans-serif; font-size:.95rem; outline:none; transition:border-color .2s,box-shadow .2s; -webkit-appearance:none; }
+  input::placeholder { color:var(--muted); }
+  input:focus, select:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(26,107,255,.15); }
+  select option { background:var(--navy); color:var(--white); }
+  .mno-hint { font-size:.78rem; color:var(--sky); margin-top:.5rem; display:none; }
+  .mno-hint.visible { display:block; }
+
+  .pay-btn { width:100%; background:linear-gradient(135deg,var(--accent),var(--sky)); color:#fff; border:none; padding:1.05rem; border-radius:5px; font-family:'Rajdhani',sans-serif; font-size:1.1rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; cursor:pointer; transition:transform .2s,box-shadow .2s,opacity .2s; margin-top:.5rem; display:flex; align-items:center; justify-content:center; gap:.6rem; }
+  .pay-btn:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(26,107,255,.4); }
+  .pay-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+  .pay-btn .spinner { width:18px; height:18px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; display:none; }
+  .pay-btn.loading .spinner { display:block; }
+  .pay-btn.loading .btn-text { display:none; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .secure-note { display:flex; align-items:center; gap:.5rem; font-size:.78rem; color:var(--muted); margin-top:1rem; justify-content:center; }
+
+  footer { border-top:1px solid var(--border); padding:2.5rem 2rem; text-align:center; color:var(--muted); font-size:.85rem; line-height:1.8; }
+  footer strong { color:var(--white); font-family:'Rajdhani',sans-serif; font-size:1rem; letter-spacing:.06em; }
+
+  .toast { position:fixed; bottom:2rem; right:2rem; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1rem 1.5rem; max-width:340px; z-index:999; transform:translateY(100px); opacity:0; transition:all .35s ease; font-size:.9rem; line-height:1.5; }
+  .toast.show { transform:translateY(0); opacity:1; }
+  .toast.success { border-color:#22c55e; }
+  .toast.error   { border-color:#ef4444; }
+
+  @media (max-width:768px) {
+    .payment-wrapper { grid-template-columns:1fr; }
+    .nav-links { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">ZURI<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#payment">Pay Now</a></li>
+  </ul>
+  <a href="#payment" class="btn-primary" style="padding:.55rem 1.3rem;font-size:.85rem;">Book &amp; Pay</a>
+</nav>
+
+<header>
+  <div class="grid-bg"></div>
+  <div class="water-ring"></div>
+  <div class="water-ring"></div>
+  <div class="water-ring"></div>
+  <div class="hero-content">
+    <span class="badge">&#128205; Tanzania &bull; Premium Auto Care</span>
+    <h1 class="hero-title">ZURI<br>CARWASH</h1>
+    <p class="hero-sub">&amp; Garage</p>
+    <p class="hero-desc">Professional vehicle cleaning &amp; care services.<br>Select your service, pay securely via mobile money, and we'll handle the rest.</p>
+    <div class="hero-cta">
+      <a href="#services" class="btn-primary">View Services</a>
+      <a href="#payment" class="btn-outline">Pay Now</a>
+    </div>
+  </div>
+  <div class="highlights">
+    <div class="highlight"><div class="num">12+</div><div class="lbl">Services Available</div></div>
+    <div class="highlight"><div class="num">100%</div><div class="lbl">Mobile Money</div></div>
+    <div class="highlight"><div class="num">TZS</div><div class="lbl">Tanzanian Shilling</div></div>
+    <div class="highlight"><div class="num">&#10003;</div><div class="lbl">Secure Payments</div></div>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<section id="services">
+  <div class="services-header">
+    <p class="section-label">What We Offer</p>
+    <h2 class="section-title">Our <span>Services</span></h2>
+    <p style="color:var(--muted);font-size:.95rem;max-width:500px;line-height:1.7;">Select one or more services below. Your order summary updates live.</p>
+  </div>
+  <div class="service-tabs">
+    <button class="tab-btn active" onclick="filterServices('all',this)">All Services</button>
+    <button class="tab-btn" onclick="filterServices('motorcycle',this)">&#x1F3CD; Motorcycle</button>
+    <button class="tab-btn" onclick="filterServices('bajaj',this)">&#x1F6FA; Bajaj / Tuk-tuk</button>
+    <button class="tab-btn" onclick="filterServices('car',this)">&#x1F697; Car</button>
+    <button class="tab-btn" onclick="filterServices('carpet',this)">&#x1FAA3; Carpet</button>
+  </div>
+  <div class="service-grid" id="serviceGrid"></div>
+</section>
+
+<div class="divider"></div>
+
+<section id="payment">
+  <p class="section-label">Checkout</p>
+  <h2 class="section-title">Pay <span>Securely</span></h2>
+  <p style="color:var(--muted);font-size:.95rem;margin-bottom:3rem;line-height:1.7;">Complete your payment using M-Pesa, Tigo Pesa, Airtel Money, or Halopesa.</p>
+  <div class="payment-wrapper">
+    <div class="order-summary">
+      <p class="summary-title">&#x1F4CB; Order Summary</p>
+      <div id="summaryItems">
+        <div class="empty-state">
+          <span class="icon">&#x1F9BA;</span>
+          <p>No services selected yet.<br>Choose from the list above.</p>
+        </div>
+      </div>
+      <div id="summaryTotal" style="display:none;">
+        <div class="summary-total">
+          <span class="label">Total</span>
+          <span class="amount" id="totalAmount">TZS 0</span>
+        </div>
+      </div>
+    </div>
+    <div class="payment-form-box">
+      <h3 class="form-title">Mobile Money Payment</h3>
+      <p class="form-sub">Powered by PawaPay &mdash; secure, fast mobile money payments across Tanzania.</p>
+      <div class="form-group">
+        <label for="custName">Full Name</label>
+        <input type="text" id="custName" placeholder="e.g. John Doe" autocomplete="name"/>
+      </div>
+      <div class="form-group">
+        <label for="phone">Mobile Money Number</label>
+        <input type="tel" id="phone" placeholder="e.g. 255712345678" maxlength="15" autocomplete="tel"/>
+        <p class="mno-hint" id="mnoHint"></p>
+      </div>
+      <div class="form-group">
+        <label for="mno">Mobile Network</label>
+        <select id="mno">
+          <option value="">&#8212; Select Network &#8212;</option>
+          <option value="VODACOM_TZA">Vodacom (M-Pesa)</option>
+          <option value="AIRTEL_TZA">Airtel Money Tanzania</option>
+          <option value="TIGO_TZA">Tigo Pesa</option>
+          <option value="HALOTEL_TZA">Halopesa (Halotel)</option>
+        </select>
+      </div>
+      <button class="pay-btn" id="payBtn" onclick="initiatePayment()" disabled>
+        <span class="spinner"></span>
+        <span class="btn-text">&#x1F512; Pay Now via PawaPay</span>
+      </button>
+      <div class="secure-note">&#x1F510; Secured by PawaPay &middot; No card details required</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>ZURI CARWASH &amp; GARAGE</strong><br>
+  Tanzania &middot; Professional Vehicle Care<br><br>
+  <span style="font-size:.78rem;">Payment processing powered by
+    <a href="https://pawapay.io" target="_blank" rel="noopener" style="color:var(--sky);text-decoration:none;">PawaPay</a>
+    &middot; Mobile Money &middot; Secure &amp; Instant
+  </span>
+</footer>
+
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+<script>
+// =============================================================================
+// CONFIGURATION — Update these two values before going live
+// =============================================================================
+const PAWAPAY_API_TOKEN = 'YOUR_PAWAPAY_API_TOKEN_HERE';
+const RETURN_URL        = 'https://zuricarwash.netlify.app'; // ← your domain
+
+// Sandbox endpoint (testing). Switch to production URL when live:
+// const API_ENDPOINT = 'https://api.pawapay.io/v1/widget/sessions';
+const API_ENDPOINT = 'https://api.sandbox.pawapay.io/v1/widget/sessions';
+// =============================================================================
+
+const SERVICES = [
+  { id:'moto1',   name:'Pressure Motorcycle Wash',     price:1000,  icon:'&#x1F3CD;', cat:'motorcycle' },
+  { id:'moto2',   name:'Full Motorcycle Wash',         price:2000,  icon:'&#x1F3CD;', cat:'motorcycle' },
+  { id:'bajaj1',  name:'Pressure Bajaj Wash',          price:1500,  icon:'&#x1F6FA;', cat:'bajaj' },
+  { id:'bajaj2',  name:'Only Board Bajaj Wash',        price:2000,  icon:'&#x1F6FA;', cat:'bajaj' },
+  { id:'bajaj3',  name:'Full Bajaj Wash',              price:3000,  icon:'&#x1F6FA;', cat:'bajaj' },
+  { id:'car1',    name:'Pressure Car Wash',            price:4000,  icon:'&#x1F697;', cat:'car' },
+  { id:'car2',    name:'Premium Car Wash',             price:10000, icon:'&#x1F697;', cat:'car' },
+  { id:'car3',    name:'Partial Car Wash',             price:7000,  icon:'&#x1F697;', cat:'car' },
+  { id:'carpet1', name:'Big Carpet Wash',              price:25000, icon:'&#x1FAA3;', cat:'carpet' },
+  { id:'carpet2', name:'Middle Sized Carpet Wash',     price:18000, icon:'&#x1FAA3;', cat:'carpet' },
+  { id:'carpet3', name:'Small Sized Carpet Wash',      price:10000, icon:'&#x1FAA3;', cat:'carpet' },
+  { id:'carpet4', name:'Very Small Sized Carpet Wash', price:7000,  icon:'&#x1FAA3;', cat:'carpet' },
+];
+
+let selected = new Set();
+let currentFilter = 'all';
+
+function fmt(n) { return 'TZS ' + n.toLocaleString('en-TZ'); }
+
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (type || '');
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 4500);
+}
+
+function renderGrid() {
+  const grid = document.getElementById('serviceGrid');
+  const visible = currentFilter === 'all' ? SERVICES : SERVICES.filter(s => s.cat === currentFilter);
+  grid.innerHTML = visible.map(s => {
+    const sel = selected.has(s.id);
+    return '<div class="service-card' + (sel ? ' selected' : '') + '"' +
+      ' role="button" tabindex="0" aria-pressed="' + sel + '"' +
+      ' onclick="toggleService(\'' + s.id + '\')"' +
+      ' onkeydown="if(event.key===\'Enter\'||event.key===\' \')toggleService(\'' + s.id + '\')">' +
+      '<span class="service-icon">' + s.icon + '</span>' +
+      '<p class="service-name">' + s.name + '</p>' +
+      '<p class="service-price">' + fmt(s.price) + ' <span>/ service</span></p>' +
+      '<span class="service-check" aria-hidden="true">&#10003;</span>' +
+      '</div>';
+  }).join('');
+}
+
+function toggleService(id) {
+  if (selected.has(id)) selected.delete(id); else selected.add(id);
+  renderGrid();
+  updateSummary();
+}
+
+function filterServices(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderGrid();
+}
+
+function updateSummary() {
+  const items = [...selected].map(id => SERVICES.find(s => s.id === id));
+  const total = items.reduce((sum, s) => sum + s.price, 0);
+  const container = document.getElementById('summaryItems');
+  const totalEl   = document.getElementById('summaryTotal');
+  const payBtn    = document.getElementById('payBtn');
+
+  if (items.length === 0) {
+    container.innerHTML = '<div class="empty-state"><span class="icon">&#x1F9BA;</span><p>No services selected yet.<br>Choose from the list above.</p></div>';
+    totalEl.style.display = 'none';
+    payBtn.disabled = true;
+    return;
+  }
+  container.innerHTML = items.map(s =>
+    '<div class="summary-item"><span class="name">' + s.icon + ' ' + s.name + '</span><span class="price">' + fmt(s.price) + '</span></div>'
+  ).join('');
+  totalEl.style.display = 'block';
+  document.getElementById('totalAmount').textContent = fmt(total);
+  payBtn.disabled = false;
+}
+
+// Tanzania network prefix detection
+function detectNetwork(val) {
+  if (val.startsWith('25561')||val.startsWith('25562')||val.startsWith('25563')) return 'HALOTEL_TZA';
+  if (val.startsWith('25565')||val.startsWith('25566')||val.startsWith('25571')||
+      val.startsWith('25572')||val.startsWith('25573')||val.startsWith('25574')||
+      val.startsWith('25575')) return 'TIGO_TZA';
+  if (val.startsWith('25567')||val.startsWith('25568')||val.startsWith('25578')||
+      val.startsWith('25579')) return 'AIRTEL_TZA';
+  if (val.startsWith('2556') ||val.startsWith('25576')||val.startsWith('25577')) return 'VODACOM_TZA';
+  return null;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderGrid();
+
+  var MNO_NAMES = { VODACOM_TZA:'Vodacom M-Pesa', AIRTEL_TZA:'Airtel Money', TIGO_TZA:'Tigo Pesa', HALOTEL_TZA:'Halopesa' };
+  var phoneInput = document.getElementById('phone');
+  var mnoSelect  = document.getElementById('mno');
+  var hint       = document.getElementById('mnoHint');
+
+  phoneInput.addEventListener('input', function() {
+    var val = phoneInput.value.replace(/\D/g, '');
+    if (val.length >= 8) {
+      var detected = detectNetwork(val);
+      if (detected) {
+        mnoSelect.value = detected;
+        hint.textContent = 'Auto-detected: ' + MNO_NAMES[detected];
+      } else {
+        hint.textContent = 'Network not detected - please select manually.';
+      }
+      hint.classList.add('visible');
+    } else {
+      hint.classList.remove('visible');
+    }
+  });
+
+  // If returning from PawaPay payment page, depositId is appended to URL
+  var params = new URLSearchParams(window.location.search);
+  var depositId = params.get('depositId');
+  if (depositId) {
+    showToast('Payment submitted! Thank you - we will confirm your booking shortly.', 'success');
+  }
+});
+
+async function initiatePayment() {
+  var name  = document.getElementById('custName').value.trim();
+  var phone = document.getElementById('phone').value.replace(/\D/g, '');
+  var mno   = document.getElementById('mno').value;
+  var btn   = document.getElementById('payBtn');
+
+  if (!name)                       return showToast('Please enter your name.', 'error');
+  if (!phone || phone.length < 12) return showToast('Enter a valid number starting with 255 (e.g. 255712345678).', 'error');
+  if (!mno)                        return showToast('Please select your mobile network.', 'error');
+  if (selected.size === 0)         return showToast('Please select at least one service.', 'error');
+
+  var items        = Array.from(selected).map(function(id) { return SERVICES.find(function(s) { return s.id === id; }); });
+  var total        = items.reduce(function(sum, s) { return sum + s.price; }, 0);
+  var depositId    = generateUUID();
+  var serviceNames = items.map(function(s) { return s.name; }).join(', ');
+
+  // statementDescription: 4-22 alphanumeric characters (PawaPay requirement)
+  var statementDescription = ('ZuriWash' + serviceNames).replace(/[^a-zA-Z0-9]/g, '').substring(0, 22);
+
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  var payload = {
+    depositId:            depositId,
+    returnUrl:            RETURN_URL,
+    statementDescription: statementDescription,
+    amount:               String(total),
+    msisdn:               phone,
+    language:             'EN',
+    country:              'TZA',
+    reason:               'Zuri Carwash Services',
+    metadata: [
+      { fieldName: 'customerName', fieldValue: name,                              isPII: true },
+      { fieldName: 'services',     fieldValue: serviceNames.substring(0, 100) }
+    ]
+  };
+
+  try {
+    var res = await fetch(API_ENDPOINT, {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + PAWAPAY_API_TOKEN
+      },
+      body: JSON.stringify(payload)
+    });
+
+    var data = await res.json();
+
+    if (res.ok && data.redirectUrl) {
+      showToast('Redirecting to PawaPay...', 'success');
+      setTimeout(function() { window.location.href = data.redirectUrl; }, 900);
+    } else {
+      var msg = data.error || data.errorMessage || data.description || JSON.stringify(data);
+      showToast('Payment failed: ' + msg, 'error');
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+  } catch (err) {
+    showToast('Network error: ' + err.message, 'error');
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
