@@ -799,7 +799,7 @@
 // ────────────────────────────────────────────────
 const PAWAPAY_CONFIG = {
   apiToken:   'eyJraWQiOiIxIiwiYWxnIjoiRVMyNTYifQ.eyJ0dCI6IkFBVCIsInN1YiI6IjIxNTQzIiwibWF2IjoiMSIsImV4cCI6MjA5NTY2MTQ5NywiaWF0IjoxNzgwMDQyMjk3LCJwbSI6IkRBRixQQUYiLCJqdGkiOiI0NmU0YWE5NC0wODQyLTQ4NTMtOGFlMi0zNTlkM2MyNmE3YjgifQ.qFZR7UHomA4XLuFQBZ-oepnIU45E85lLzB7ibOyvBA0E9YypGbGFVh1M1l2MnUUB9APHIzF29dkn18wEryHizQ',
-  returnUrl:  'https://zuricarwash.tiiny.site',
+  returnUrl:  'https://zuricarwash.netlify.app',
   country:    'TZA',                      // Tanzania ISO code — do not change
   currency:   'TZS',                      // Tanzanian Shilling — do not change
   // Sandbox endpoint (for testing):
@@ -973,14 +973,9 @@ async function initiatePayment() {
   };
 
   try {
-    // Using corsproxy.io to bypass CORS for single-file hosting
-    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(PAWAPAY_CONFIG.apiEndpoint);
-    const res = await fetch(proxyUrl, {
+    const res = await fetch('/.netlify/functions/pay', {
       method: 'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + PAWAPAY_CONFIG.apiToken,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
 
