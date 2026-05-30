@@ -4,16 +4,6 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Zuri Carwash & Garage – Tanzania</title>
-
-<!-- ── APP ICON (Home Screen & Browser Tab) ── -->
-<link rel="icon" type="image/png" href="icon.png"/>
-<link rel="apple-touch-icon" href="icon.png"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-title" content="Zuri Garage"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="theme-color" content="#0a1628"/>
-<link rel="manifest" href="manifest.json"/>
-
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{--navy:#0a1628;--accent:#1a6bff;--sky:#3b9eff;--gold:#f0b429;--white:#f4f8ff;--muted:#8aa0c0;--card:#0f1e3d;--border:rgba(59,158,255,0.18);--green:#22c55e;--red:#ef4444}
@@ -853,7 +843,7 @@ async function pollPaymentStatus(orderReference, token, btn, cartSnapshot, custo
         clearInterval(interval);
         btn.classList.remove('loading'); btn.disabled=false;
         document.getElementById('waitingBox').classList.remove('on');
-        showToast('⏳ Still waiting for ClickPesa confirmation. If you entered your PIN, your payment is being processed — check your ClickPesa dashboard.','');
+        showToast('⏳ Still waiting for confirmation. If you entered your PIN, your payment is being processed — please wait a moment.','');
       }
 
     } catch(e){
@@ -861,7 +851,7 @@ async function pollPaymentStatus(orderReference, token, btn, cartSnapshot, custo
         clearInterval(interval);
         btn.classList.remove('loading'); btn.disabled=false;
         document.getElementById('waitingBox').classList.remove('on');
-        showToast('❌ Could not confirm payment status. Please check your ClickPesa dashboard.','error');
+        showToast('❌ Could not confirm payment status. Please try again or contact support.','error');
       }
     }
   }, 5000);
