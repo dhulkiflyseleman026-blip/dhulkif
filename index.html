@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zuri Carwash & Garage – Tanzania</title>
+
+<!-- ── APP ICON (Home Screen & Browser Tab) ── -->
+<link rel="icon" type="image/png" href="icon.png"/>
+<link rel="apple-touch-icon" href="icon.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Zuri Garage"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#0a1628"/>
+<link rel="manifest" href="manifest.json"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0a1628;--accent:#1a6bff;--sky:#3b9eff;--gold:#f0b429;--white:#f4f8ff;--muted:#8aa0c0;--card:#0f1e3d;--border:rgba(59,158,255,0.18);--green:#22c55e;--red:#ef4444}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(10,22,40,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;color:var(--white);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;transition:color .2s;font-weight:500}
+.nav-links a:hover{color:var(--white)}
+.nav-right{display:flex;align-items:center;gap:.8rem}
+@media(max-width:600px){.nav-links{display:none}}
+
+/* ── CART NAV BUTTON ── */
+.cart-btn{position:relative;background:rgba(26,107,255,.15);border:1px solid var(--border);color:var(--white);padding:.5rem 1rem;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.4rem}
+.cart-btn:hover{background:rgba(26,107,255,.3);border-color:var(--accent)}
+.cart-badge{position:absolute;top:-.4rem;right:-.4rem;background:var(--gold);color:#0a1628;border-radius:50%;width:18px;height:18px;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;transition:transform .2s}
+.cart-badge.bump{transform:scale(1.4)}
+
+/* ── HERO ── */
+header{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 3rem;overflow:hidden}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(26,107,255,.25) 0%,transparent 70%),linear-gradient(180deg,#0a1628 0%,#071020 100%);z-index:0}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(59,158,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(59,158,255,.06) 1px,transparent 1px);background-size:40px 40px;z-index:0}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(59,158,255,.1);animation:pulse 4s ease-out infinite}
+.ring:nth-child(1){width:320px;height:320px;top:8%;left:58%;animation-delay:0s}
+.ring:nth-child(2){width:580px;height:580px;top:2%;left:48%;animation-delay:1.3s}
+.ring:nth-child(3){width:840px;height:840px;top:-8%;left:36%;animation-delay:2.6s}
+@keyframes pulse{0%{opacity:.5;transform:scale(.95)}100%{opacity:0;transform:scale(1.06)}}
+.hero-content{position:relative;z-index:1;max-width:680px}
+.badge{display:inline-block;background:rgba(26,107,255,.15);border:1px solid var(--border);color:var(--sky);font-family:'Rajdhani',sans-serif;font-size:.72rem;letter-spacing:.2em;padding:.32rem 1rem;border-radius:2rem;margin-bottom:1.5rem;text-transform:uppercase;animation:fadeUp .8s ease both}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,12vw,7rem);line-height:.9;letter-spacing:.02em;background:linear-gradient(135deg,#fff 30%,var(--sky) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:fadeUp .8s .1s ease both}
+.hero-sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.5rem,5vw,2.6rem);color:var(--gold);letter-spacing:.12em;margin-top:.3rem;animation:fadeUp .8s .2s ease both}
+.hero-desc{margin-top:1.2rem;color:var(--muted);font-size:1rem;line-height:1.7;animation:fadeUp .8s .3s ease both}
+.hero-cta{margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--sky));color:#fff;border:none;padding:.85rem 2rem;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s;text-decoration:none;display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,107,255,.4)}
+.btn-outline{background:transparent;color:var(--white);border:1px solid var(--border);padding:.85rem 2rem;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,background .2s;text-decoration:none;display:inline-block}
+.btn-outline:hover{border-color:var(--sky);background:rgba(59,158,255,.08)}
+.highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1rem;margin-top:3.5rem;width:100%;max-width:580px;position:relative;z-index:1}
+.hl{text-align:center;padding:1.2rem;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.02)}
+.hl .num{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--sky);line-height:1}
+.hl .lbl{font-size:.75rem;color:var(--muted);margin-top:.3rem}
+
+/* ── LAYOUT ── */
+.wrap{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.sec-label{font-family:'Rajdhani',sans-serif;font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--sky);margin-bottom:.6rem}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1;letter-spacing:.03em;margin-bottom:.8rem}
+.sec-title span{color:var(--gold)}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+
+/* ── SERVICE GRID ── */
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.5rem 0 2rem}
+.tab{background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);padding:.45rem 1.1rem;border-radius:2rem;font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.05em;cursor:pointer;transition:all .2s}
+.tab.active,.tab:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.4rem;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden;user-select:none}
+.card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--accent),var(--sky));transform:scaleY(0);transform-origin:bottom;transition:transform .25s}
+.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 28px rgba(26,107,255,.18)}
+.card:hover::after{transform:scaleY(1)}
+.c-icon{font-size:1.7rem;margin-bottom:.7rem;display:block}
+.c-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.04em;color:var(--white);margin-bottom:.4rem}
+.c-price{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold);letter-spacing:.05em}
+.c-price span{font-family:'DM Sans',sans-serif;font-size:.76rem;color:var(--muted);font-weight:400;margin-left:.2rem}
+/* add-to-cart button on card */
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.9rem}
+.add-btn{background:linear-gradient(135deg,var(--accent),var(--sky));color:#fff;border:none;border-radius:4px;padding:.35rem .9rem;font-family:'Rajdhani',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.add-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(26,107,255,.4)}
+.qty-ctrl{display:flex;align-items:center;gap:.4rem}
+.qty-ctrl button{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.06);color:var(--white);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.qty-ctrl button:hover{background:var(--accent);border-color:var(--accent)}
+.qty-ctrl .qty-num{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--sky);min-width:20px;text-align:center}
+
+/* ── CART DRAWER ── */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100vw);background:#0c1a34;border-left:1px solid var(--border);z-index:301;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-head{padding:1.4rem 1.6rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cart-head-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.06em}
+.cart-head-title span{color:var(--gold)}
+.cart-close{background:none;border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cart-close:hover{border-color:var(--red);color:var(--red)}
+.cart-items{flex:1;overflow-y:auto;padding:1.2rem 1.6rem}
+.cart-items::-webkit-scrollbar{width:4px}
+.cart-items::-webkit-scrollbar-track{background:transparent}
+.cart-items::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.cart-item{display:flex;align-items:center;gap:.9rem;padding:.9rem 0;border-bottom:1px solid var(--border)}
+.cart-item-icon{font-size:1.5rem;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.95rem;color:var(--white)}
+.cart-item-price{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gold)}
+.cart-item-qty{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+.cart-item-qty button{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--white);font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.cart-item-qty button:hover{background:var(--accent);border-color:var(--accent)}
+.cart-item-qty .q{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--sky);min-width:20px;text-align:center}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.cart-empty .ic{font-size:3rem;display:block;margin-bottom:.8rem}
+.cart-foot{padding:1.4rem 1.6rem;border-top:1px solid var(--border);flex-shrink:0}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+.cart-total-lbl{font-family:'Rajdhani',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.cart-total-amt{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white)}
+.cart-clear{width:100%;background:none;border:1px solid rgba(239,68,68,.3);color:var(--red);padding:.6rem;border-radius:4px;font-family:'Rajdhani',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;cursor:pointer;transition:all .2s;margin-bottom:.7rem}
+.cart-clear:hover{background:rgba(239,68,68,.1)}
+.cart-checkout-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--sky));color:#fff;border:none;padding:1rem;border-radius:5px;font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.cart-checkout-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(26,107,255,.4)}
+.cart-checkout-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ── CHECKOUT SECTION ── */
+.pay-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
+@media(max-width:768px){.pay-wrap{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.8rem}
+.sum-title{font-family:'Rajdhani',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sky);margin-bottom:1.2rem}
+.sum-item{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--border);font-size:.92rem}
+.sum-item .nm{color:#e8f0fe}
+.sum-item .pr{color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:600}
+.sum-total{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:2px solid var(--accent)}
+.sum-total .lbl{font-family:'Rajdhani',sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.sum-total .amt{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white)}
+.empty{text-align:center;padding:2rem 0;color:var(--muted);font-size:.88rem;line-height:1.7}
+.empty .ic{font-size:2rem;margin-bottom:.6rem;display:block}
+.f-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;margin-bottom:.3rem}
+.f-sub{color:var(--muted);font-size:.84rem;margin-bottom:1.8rem;line-height:1.6}
+.fg{margin-bottom:1.2rem}
+label{display:block;font-family:'Rajdhani',sans-serif;font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sky);margin-bottom:.45rem;font-weight:600}
+input,select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--white);padding:.8rem 1rem;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:.92rem;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+input::placeholder{color:var(--muted)}
+input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(26,107,255,.15)}
+select option{background:var(--navy);color:var(--white)}
+.hint{font-size:.75rem;color:var(--muted);margin-top:.4rem;display:none}
+.hint.on{display:block}
+.pay-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--sky));color:#fff;border:none;padding:1rem;border-radius:5px;font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s,opacity .2s;margin-top:.4rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.pay-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(26,107,255,.4)}
+.pay-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.spinner{width:17px;height:17px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none}
+.pay-btn.loading .spinner{display:block}
+.pay-btn.loading .bt{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.secure{display:flex;align-items:center;gap:.4rem;font-size:.74rem;color:var(--muted);margin-top:.8rem;justify-content:center}
+/* waiting state */
+.waiting-box{background:rgba(26,107,255,.07);border:1px solid var(--border);border-radius:8px;padding:1.4rem;margin-top:1rem;text-align:center;display:none}
+.waiting-box.on{display:block}
+.waiting-box p{font-size:.88rem;color:var(--muted);line-height:1.7;margin-top:.5rem}
+.pulse-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--gold);animation:pdot 1.2s ease-in-out infinite}
+@keyframes pdot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+
+/* ── RECEIPT MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:400;display:flex;align-items:center;justify-content:center;padding:1rem;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:#0c1a34;border:1px solid rgba(34,197,94,.35);border-radius:14px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;transform:scale(.92);transition:transform .3s}
+.modal-overlay.open .modal{transform:scale(1)}
+.modal::-webkit-scrollbar{width:4px}
+.modal::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+/* receipt header */
+.rcpt-head{background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(26,107,255,.12));border-bottom:1px solid rgba(34,197,94,.2);padding:2rem 2rem 1.5rem;text-align:center}
+.rcpt-check{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--green),#16a34a);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 1rem}
+.rcpt-head h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.06em;color:var(--green)}
+.rcpt-head p{color:var(--muted);font-size:.88rem;margin-top:.3rem}
+/* receipt body */
+.rcpt-body{padding:1.6rem 2rem}
+.rcpt-ref{background:rgba(26,107,255,.08);border:1px solid var(--border);border-radius:6px;padding:.8rem 1.1rem;margin-bottom:1.4rem;display:flex;justify-content:space-between;align-items:center}
+.rcpt-ref .lbl{font-family:'Rajdhani',sans-serif;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sky)}
+.rcpt-ref .val{font-family:monospace;font-size:.88rem;color:var(--white)}
+.rcpt-section-lbl{font-family:'Rajdhani',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sky);margin-bottom:.7rem}
+.rcpt-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(59,158,255,.08);font-size:.9rem}
+.rcpt-row .k{color:var(--muted)}
+.rcpt-row .v{color:var(--white);font-weight:500}
+.rcpt-items{margin:1.2rem 0}
+.rcpt-item{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(59,158,255,.08);font-size:.88rem}
+.rcpt-item .in{color:#e8f0fe}
+.rcpt-item .ip{color:var(--gold);font-family:'Rajdhani',sans-serif;font-weight:600}
+.rcpt-total-row{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:2px solid var(--green)}
+.rcpt-total-row .tl{font-family:'Rajdhani',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.rcpt-total-row .ta{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--green)}
+.rcpt-foot{padding:1.2rem 2rem 1.8rem;display:flex;gap:.8rem;flex-wrap:wrap}
+.rcpt-print-btn{flex:1;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:var(--green);padding:.75rem 1rem;border-radius:5px;font-family:'Rajdhani',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.08em;cursor:pointer;transition:all .2s;text-transform:uppercase}
+.rcpt-print-btn:hover{background:rgba(34,197,94,.22)}
+.rcpt-close-btn{flex:1;background:rgba(26,107,255,.12);border:1px solid var(--border);color:var(--white);padding:.75rem 1rem;border-radius:5px;font-family:'Rajdhani',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.08em;cursor:pointer;transition:all .2s;text-transform:uppercase}
+.rcpt-close-btn:hover{background:rgba(26,107,255,.22)}
+/* watermark */
+.rcpt-watermark{text-align:center;font-size:.72rem;color:var(--muted);padding:0 2rem .8rem;line-height:1.6}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem 1.4rem;max-width:320px;z-index:500;transform:translateY(100px);opacity:0;transition:all .3s ease;font-size:.87rem;line-height:1.5}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:var(--green)}
+.toast.error{border-color:var(--red)}
+
+/* ── FOOTER / HELP ── */
+footer{border-top:1px solid var(--border);padding:3rem 2rem;text-align:center;color:var(--muted);font-size:.82rem;line-height:1.8}
+.help-box{background:rgba(26,107,255,.07);border:1px solid var(--border);border-radius:10px;padding:2rem;max-width:560px;margin:0 auto 2.5rem}
+.help-box h4{font-family:"Bebas Neue",sans-serif;font-size:1.6rem;letter-spacing:.05em;color:var(--white);margin-bottom:.4rem}
+.help-box p{color:var(--muted);font-size:.84rem;margin-bottom:1.4rem;line-height:1.6}
+.contact-links{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.clink{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;border-radius:5px;font-family:"Rajdhani",sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.06em;text-decoration:none;transition:transform .2s,box-shadow .2s;text-transform:uppercase}
+.clink:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.clink.call{background:rgba(59,158,255,.15);border:1px solid rgba(59,158,255,.3);color:var(--sky)}
+.clink.email{background:rgba(240,180,41,.1);border:1px solid rgba(240,180,41,.3);color:var(--gold)}
+.clink.whatsapp{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:#22c55e}
+footer strong{color:var(--white);font-family:'Rajdhani',sans-serif;font-size:1rem;letter-spacing:.06em}
+
+/* ── PRINT STYLES ── */
+@media print{
+  nav,footer,.cart-btn,.cart-overlay,.cart-drawer,.modal-overlay,.toast,.pay-btn,.rcpt-foot,
+  #services,header,.divider,.tabs,.cart-close,.rcpt-print-btn,.rcpt-close-btn{display:none!important}
+  body{background:#fff;color:#000}
+  .modal-overlay{position:static;opacity:1;pointer-events:all;padding:0;background:none}
+  .modal{border:none;max-height:none;transform:none;border-radius:0;background:#fff;color:#000}
+  .rcpt-head{background:none;border-bottom:2px solid #000;padding:1rem 0}
+  .rcpt-head h2,.rcpt-head p,.rcpt-ref .lbl,.rcpt-section-lbl{color:#000}
+  .rcpt-ref{background:none;border:1px solid #ccc}
+  .rcpt-ref .val,.rcpt-row .k,.rcpt-row .v,.rcpt-item .in,.rcpt-watermark{color:#000}
+  .rcpt-item .ip,.rcpt-total-row .tl{color:#333}
+  .rcpt-total-row .ta{color:#000;font-size:1.8rem}
+  .rcpt-check{background:#22c55e}
+  .rcpt-body{padding:1rem 0}
+  .rcpt-foot{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<nav>
+  <a href="#" class="nav-logo">ZURI<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#payment">Checkout</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="openCart()" aria-label="View cart">
+      🛒 Cart
+      <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+    </button>
+    <a href="#payment" class="btn-primary" style="padding:.5rem 1.2rem;font-size:.82rem;">Pay Now</a>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<header>
+  <div class="grid-bg"></div>
+  <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+  <div class="hero-content">
+    <span class="badge">📍 Tanzania · Professional Auto Care</span>
+    <h1 class="hero-title">ZURI<br>CARWASH</h1>
+    <p class="hero-sub">& Garage</p>
+    <p class="hero-desc">Professional vehicle cleaning &amp; care.<br>Add services to your cart — pay via mobile money instantly.</p>
+    <div class="hero-cta">
+      <a href="#services" class="btn-primary">View Services</a>
+      <button class="btn-outline" onclick="openCart()">🛒 View Cart</button>
+    </div>
+  </div>
+  <div class="highlights">
+    <div class="hl"><div class="num">12+</div><div class="lbl">Services</div></div>
+    <div class="hl"><div class="num">4</div><div class="lbl">Networks</div></div>
+    <div class="hl"><div class="num">TZS</div><div class="lbl">Currency</div></div>
+    <div class="hl"><div class="num">✓</div><div class="lbl">Secure Pay</div></div>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- ══════════ SERVICES ══════════ -->
+<section id="services">
+  <div class="wrap">
+    <p class="sec-label">What We Offer</p>
+    <h2 class="sec-title">Our <span>Services</span></h2>
+    <p style="color:var(--muted);font-size:.92rem;max-width:480px;line-height:1.7;margin-bottom:.5rem;">
+      Tap <strong style="color:var(--white)">Add to Cart</strong> on any service. Review your cart, then proceed to checkout.
+    </p>
+    <div class="tabs">
+      <button class="tab active" onclick="filterCat('all',this)">All</button>
+      <button class="tab" onclick="filterCat('motorcycle',this)">🏍️ Motorcycle</button>
+      <button class="tab" onclick="filterCat('bajaj',this)">🛺 Bajaj</button>
+      <button class="tab" onclick="filterCat('car',this)">🚗 Car</button>
+      <button class="tab" onclick="filterCat('carpet',this)">🪣 Carpet</button>
+    </div>
+    <div class="sgrid" id="grid"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ CHECKOUT ══════════ -->
+<section id="payment">
+  <div class="wrap">
+    <p class="sec-label">Checkout</p>
+    <h2 class="sec-title">Pay <span>Securely</span></h2>
+    <p style="color:var(--muted);font-size:.92rem;margin-bottom:2.5rem;line-height:1.7;">Pay via Vodacom M-Pesa, Airtel Money, Tigo Pesa or Halopesa.</p>
+    <div class="pay-wrap">
+
+      <!-- ORDER SUMMARY -->
+      <div class="box">
+        <p class="sum-title">📋 Order Summary</p>
+        <div id="sumItems">
+          <div class="empty"><span class="ic">🛒</span>Your cart is empty.<br>Add services from the list above.</div>
+        </div>
+        <div id="sumTotal" style="display:none">
+          <div class="sum-total"><span class="lbl">Total</span><span class="amt" id="totalAmt">TZS 0</span></div>
+        </div>
+        <button onclick="openCart()" style="margin-top:1rem;width:100%;background:none;border:1px solid var(--border);color:var(--muted);padding:.6rem;border-radius:5px;font-family:'Rajdhani',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+          🛒 Edit Cart
+        </button>
+      </div>
+
+      <!-- PAYMENT FORM -->
+      <div class="box">
+        <h3 class="f-title">Mobile Money Payment</h3>
+        <p class="f-sub">Powered by ClickPesa — safe &amp; instant mobile money payments across Tanzania.</p>
+        <div class="fg">
+          <label for="custName">Full Name</label>
+          <input type="text" id="custName" placeholder="e.g. John Mwangi"/>
+        </div>
+        <div class="fg">
+          <label for="phone">Mobile Money Number</label>
+          <input type="tel" id="phone" placeholder="e.g. 255763456789" maxlength="15"/>
+          <p class="hint" id="hint"></p>
+        </div>
+        <div class="fg">
+          <label for="mno">Mobile Network</label>
+          <select id="mno">
+            <option value="">— Select Network —</option>
+            <option value="VODACOM_TZA">Vodacom (M-Pesa)</option>
+            <option value="AIRTEL_TZA">Airtel Money</option>
+            <option value="TIGO_TZA">Tigo Pesa / Mixx by Yas</option>
+            <option value="HALOTEL_TZA">Halopesa (Halotel)</option>
+          </select>
+        </div>
+        <button class="pay-btn" id="payBtn" onclick="pay()" disabled>
+          <span class="spinner"></span>
+          <span class="bt">🔒 Pay Now via ClickPesa</span>
+        </button>
+        <div class="secure">🔐 Secured by ClickPesa · No card details needed</div>
+
+        <!-- Waiting for PIN confirmation -->
+        <div class="waiting-box" id="waitingBox">
+          <span class="pulse-dot"></span>
+          <p><strong style="color:var(--gold)">USSD prompt sent to your phone.</strong><br>
+          Enter your mobile money PIN to complete payment.<br>
+          <span style="font-size:.78rem">Waiting for ClickPesa to confirm... this may take up to 30 seconds.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="help-box">
+    <h4>Need Help? 🙋</h4>
+    <p>Our team is ready to assist you with bookings, payments, or any questions about our services. Reach us via call, email, or WhatsApp!</p>
+    <div class="contact-links">
+      <a href="tel:+255745383986" class="clink call">📞 Call Us</a>
+      <a href="mailto:dhulkiflyseleman026@gmail.com" class="clink email">✉️ Email Us</a>
+      <a href="https://wa.me/255745383986?text=Hello%20Zuri%20Carwash%2C%20I%20need%20help%20with%20my%20booking." target="_blank" class="clink whatsapp">💬 WhatsApp</a>
+    </div>
+    <div style="margin-top:1.2rem;font-size:.78rem;color:var(--muted)">
+      📞 +255 745 383 986 &nbsp;·&nbsp; ✉️ dhulkiflyseleman026@gmail.com
+    </div>
+  </div>
+  <strong>ZURI CARWASH AND GARAGE</strong><br>
+  Tanzania · Professional Vehicle Care<br>
+  <span style="font-size:.76rem;">Payments powered by <a href="https://clickpesa.com" target="_blank" style="color:var(--sky);text-decoration:none;">ClickPesa</a> · Mobile Money · Secure &amp; Instant</span>
+</footer>
+
+<!-- ══════════ CART DRAWER ══════════ -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <div class="cart-head-title">Your <span>Cart</span></div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><span class="ic">🛒</span><br>Your cart is empty.<br>Browse services and add items.</div>
+  </div>
+  <div class="cart-foot">
+    <div class="cart-total-row">
+      <span class="cart-total-lbl">Total</span>
+      <span class="cart-total-amt" id="cartTotalAmt">TZS 0</span>
+    </div>
+    <button class="cart-clear" onclick="clearCart()">🗑 Clear Cart</button>
+    <button class="cart-checkout-btn" id="cartCheckoutBtn" onclick="goCheckout()" disabled>
+      🔒 Proceed to Payment
+    </button>
+  </div>
+</div>
+
+<!-- ══════════ RECEIPT MODAL ══════════ -->
+<div class="modal-overlay" id="receiptOverlay">
+  <div class="modal" id="receiptModal">
+    <div class="rcpt-head">
+      <div class="rcpt-check">✅</div>
+      <h2>Payment Received!</h2>
+      <p>Your payment has been confirmed by ClickPesa.</p>
+    </div>
+    <div class="rcpt-body">
+      <div class="rcpt-ref">
+        <span class="lbl">Order Reference</span>
+        <span class="val" id="rcptRef">—</span>
+      </div>
+      <p class="rcpt-section-lbl">Customer Details</p>
+      <div class="rcpt-row"><span class="k">Name</span><span class="v" id="rcptName">—</span></div>
+      <div class="rcpt-row"><span class="k">Phone</span><span class="v" id="rcptPhone">—</span></div>
+      <div class="rcpt-row"><span class="k">Network</span><span class="v" id="rcptNetwork">—</span></div>
+      <div class="rcpt-row" style="border:none"><span class="k">Date & Time</span><span class="v" id="rcptDate">—</span></div>
+
+      <p class="rcpt-section-lbl" style="margin-top:1.2rem">Services</p>
+      <div class="rcpt-items" id="rcptItems"></div>
+
+      <div class="rcpt-total-row">
+        <span class="tl">Total Paid</span>
+        <span class="ta" id="rcptTotal">TZS 0</span>
+      </div>
+    </div>
+    <div class="rcpt-watermark">
+      Thank you for choosing <strong>Zuri Carwash &amp; Garage</strong> 🚗<br>
+      Payment processed securely via ClickPesa · Tanzania
+    </div>
+    <div class="rcpt-foot">
+      <button class="rcpt-print-btn" onclick="window.print()">🖨 Print Receipt</button>
+      <button class="rcpt-close-btn" onclick="closeReceipt()">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// ⚙️  CLICKPESA CONFIGURATION — Zuri Carwash & Garage
+// ══════════════════════════════════════════════════════════════
+const CP_CLIENT_ID = 'ID3q2X8jExQ9a9MKusAIL8VAL7NjrXAF';
+const CP_API_KEY   = 'SKukxg7BroljqxATfcoTCxFVggmvLyvNckn35G0sy7';
+const RETURN_URL   = 'https://dhulkiflyseleman026-blip.github.io/zuricarwash';
+// Checksum is DISABLED in your ClickPesa dashboard — do NOT send it.
+// Webhooks must be set in ClickPesa Dashboard → Settings → Developers
+// → Application Webhooks → callback URL for each event:
+//   https://dhulkiflyseleman026-blip.github.io/zuricarwash/webhook
+const CP_AUTH_URL   = 'https://api.clickpesa.com/third-parties/generate-token';
+const CP_USSD_URL   = 'https://api.clickpesa.com/third-parties/payments/initiate-ussd-push-request';
+const CP_STATUS_URL = 'https://api.clickpesa.com/third-parties/payments/';
+const PROXY = url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`;
+// ══════════════════════════════════════════════════════════════
+
+// ── Services catalogue ────────────────────────────────────────
+const SERVICES = [
+  {id:'m1', name:'Pressure Motorcycle Wash',     price:1000,  icon:'🏍️', cat:'motorcycle'},
+  {id:'m2', name:'Full Motorcycle Wash',         price:2000,  icon:'🏍️', cat:'motorcycle'},
+  {id:'b1', name:'Pressure Bajaj Wash',          price:1500,  icon:'🛺',  cat:'bajaj'},
+  {id:'b2', name:'Only Board Bajaj Wash',        price:2000,  icon:'🛺',  cat:'bajaj'},
+  {id:'b3', name:'Full Bajaj Wash',              price:3000,  icon:'🛺',  cat:'bajaj'},
+  {id:'c1', name:'Pressure Car Wash',            price:4000,  icon:'🚗',  cat:'car'},
+  {id:'c2', name:'Premium Car Wash',             price:10000, icon:'🚗',  cat:'car'},
+  {id:'c3', name:'Partial Car Wash',             price:7000,  icon:'🚗',  cat:'car'},
+  {id:'r1', name:'Big Carpet Wash',              price:25000, icon:'🪣',  cat:'carpet'},
+  {id:'r2', name:'Middle Sized Carpet Wash',     price:18000, icon:'🪣',  cat:'carpet'},
+  {id:'r3', name:'Small Sized Carpet Wash',      price:10000, icon:'🪣',  cat:'carpet'},
+  {id:'r4', name:'Very Small Sized Carpet Wash', price:7000,  icon:'🪣',  cat:'carpet'},
+];
+
+// ── Cart state: { [serviceId]: quantity } ─────────────────────
+let cart = {};
+let currentCat = 'all';
+const fmt = n => 'TZS ' + n.toLocaleString();
+
+// ─────────────────────────────────────────────────────────────
+// CART HELPERS
+// ─────────────────────────────────────────────────────────────
+function cartTotal(){
+  return Object.entries(cart).reduce((sum,[id,qty])=>{
+    const s = SERVICES.find(x=>x.id===id);
+    return sum + (s ? s.price * qty : 0);
+  },0);
+}
+function cartCount(){
+  return Object.values(cart).reduce((s,q)=>s+q,0);
+}
+function addToCart(id){
+  cart[id] = (cart[id]||0) + 1;
+  refreshAll();
+  bumpBadge();
+  showToast('✅ Added to cart!','success');
+}
+function removeFromCart(id){
+  if(!cart[id]) return;
+  cart[id]--;
+  if(cart[id]<=0) delete cart[id];
+  refreshAll();
+}
+function clearCart(){
+  cart = {};
+  refreshAll();
+  showToast('Cart cleared.','');
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER — service grid
+// ─────────────────────────────────────────────────────────────
+function renderGrid(){
+  const list = currentCat==='all' ? SERVICES : SERVICES.filter(s=>s.cat===currentCat);
+  document.getElementById('grid').innerHTML = list.map(s=>{
+    const qty = cart[s.id]||0;
+    return `
+    <div class="card">
+      <span class="c-icon">${s.icon}</span>
+      <p class="c-name">${s.name}</p>
+      <p class="c-price">${fmt(s.price)}<span>/ service</span></p>
+      <div class="card-footer">
+        ${qty===0
+          ? `<button class="add-btn" onclick="addToCart('${s.id}')">+ Add to Cart</button>`
+          : `<div class="qty-ctrl">
+               <button onclick="removeFromCart('${s.id}')">−</button>
+               <span class="qty-num">${qty}</span>
+               <button onclick="addToCart('${s.id}')">+</button>
+             </div>
+             <span style="font-size:.78rem;color:var(--gold);font-family:'Bebas Neue',sans-serif">${fmt(s.price*qty)}</span>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterCat(c, btn){
+  currentCat = c;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER — cart drawer
+// ─────────────────────────────────────────────────────────────
+function renderCart(){
+  const ids   = Object.keys(cart).filter(id=>cart[id]>0);
+  const total = cartTotal();
+  const count = cartCount();
+
+  // badge
+  const badge = document.getElementById('cartBadge');
+  if(count>0){ badge.textContent=count; badge.style.display='flex'; }
+  else { badge.style.display='none'; }
+
+  // drawer items
+  const el = document.getElementById('cartItems');
+  if(ids.length===0){
+    el.innerHTML='<div class="cart-empty"><span class="ic">🛒</span><br>Your cart is empty.<br>Browse services and add items.</div>';
+  } else {
+    el.innerHTML = ids.map(id=>{
+      const s   = SERVICES.find(x=>x.id===id);
+      const qty = cart[id];
+      return `
+      <div class="cart-item">
+        <span class="cart-item-icon">${s.icon}</span>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${s.name}</div>
+          <div class="cart-item-price">${fmt(s.price * qty)}</div>
+        </div>
+        <div class="cart-item-qty">
+          <button onclick="removeFromCart('${id}')">−</button>
+          <span class="q">${qty}</span>
+          <button onclick="addToCart('${id}')">+</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // totals
+  document.getElementById('cartTotalAmt').textContent = fmt(total);
+  document.getElementById('cartCheckoutBtn').disabled = (ids.length===0);
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER — checkout order summary panel
+// ─────────────────────────────────────────────────────────────
+function renderSummary(){
+  const ids   = Object.keys(cart).filter(id=>cart[id]>0);
+  const total = cartTotal();
+  const si    = document.getElementById('sumItems');
+  const st    = document.getElementById('sumTotal');
+  const pb    = document.getElementById('payBtn');
+
+  if(ids.length===0){
+    si.innerHTML='<div class="empty"><span class="ic">🛒</span>Your cart is empty.<br>Add services from the list above.</div>';
+    st.style.display='none';
+    pb.disabled=true;
+    return;
+  }
+  si.innerHTML = ids.map(id=>{
+    const s   = SERVICES.find(x=>x.id===id);
+    const qty = cart[id];
+    return `<div class="sum-item">
+      <span class="nm">${s.icon} ${s.name}${qty>1?' ×'+qty:''}</span>
+      <span class="pr">${fmt(s.price*qty)}</span>
+    </div>`;
+  }).join('');
+  st.style.display='block';
+  document.getElementById('totalAmt').textContent = fmt(total);
+  pb.disabled=false;
+}
+
+function refreshAll(){
+  renderGrid();
+  renderCart();
+  renderSummary();
+}
+
+// badge bump animation
+function bumpBadge(){
+  const b = document.getElementById('cartBadge');
+  b.classList.remove('bump');
+  void b.offsetWidth;
+  b.classList.add('bump');
+  setTimeout(()=>b.classList.remove('bump'),300);
+}
+
+// ─────────────────────────────────────────────────────────────
+// CART DRAWER OPEN / CLOSE
+// ─────────────────────────────────────────────────────────────
+function openCart(){
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCart(){
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.body.style.overflow='';
+}
+function goCheckout(){
+  closeCart();
+  document.getElementById('payment').scrollIntoView({behavior:'smooth'});
+}
+
+// ─────────────────────────────────────────────────────────────
+// RECEIPT MODAL
+// ─────────────────────────────────────────────────────────────
+function showReceipt(paymentData, orderReference, customerName, customerPhone, networkLabel, cartSnapshot){
+  // Only shown when ClickPesa confirms PAYMENT RECEIVED via poll
+  document.getElementById('rcptRef').textContent     = orderReference;
+  document.getElementById('rcptName').textContent    = customerName;
+  document.getElementById('rcptPhone').textContent   = customerPhone;
+  document.getElementById('rcptNetwork').textContent = networkLabel;
+  document.getElementById('rcptDate').textContent    = new Date().toLocaleString('en-TZ',{
+    dateStyle:'medium', timeStyle:'short'
+  });
+
+  // services
+  const ids = Object.keys(cartSnapshot).filter(id=>cartSnapshot[id]>0);
+  document.getElementById('rcptItems').innerHTML = ids.map(id=>{
+    const s   = SERVICES.find(x=>x.id===id);
+    const qty = cartSnapshot[id];
+    return `<div class="rcpt-item">
+      <span class="in">${s.icon} ${s.name}${qty>1?' ×'+qty:''}</span>
+      <span class="ip">${fmt(s.price*qty)}</span>
+    </div>`;
+  }).join('');
+
+  // total — prefer what ClickPesa reported, fall back to our cart
+  const collectedRaw = paymentData?.collectedAmount;
+  const total = collectedRaw ? parseInt(collectedRaw,10) : cartTotal();
+  document.getElementById('rcptTotal').textContent = fmt(isNaN(total) ? cartTotal() : total);
+
+  document.getElementById('receiptOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeReceipt(){
+  document.getElementById('receiptOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ─────────────────────────────────────────────────────────────
+// PHONE AUTO-DETECT
+// ─────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',()=>{
+  refreshAll();
+
+  document.getElementById('phone').addEventListener('input',function(){
+    const v  = this.value.replace(/\D/g,'');
+    const mn = document.getElementById('mno');
+    const h  = document.getElementById('hint');
+    let d='', fb=false;
+    if(v.startsWith('25574')||v.startsWith('25575')||v.startsWith('25576'))                              d='VODACOM_TZA';
+    else if(v.startsWith('25568')||v.startsWith('25578'))                                                d='AIRTEL_TZA';
+    else if(v.startsWith('25565')||v.startsWith('25566')||v.startsWith('25567')||v.startsWith('25571')) d='TIGO_TZA';
+    else if(v.startsWith('25561')||v.startsWith('25562'))                                                d='HALOTEL_TZA';
+    else if(v.length>=6){ d='TIGO_TZA'; fb=true; }
+    if(d){
+      mn.value = d;
+      const nm = {VODACOM_TZA:'Vodacom M-Pesa', AIRTEL_TZA:'Airtel Money', TIGO_TZA:'Tigo Pesa / Mixx by Yas', HALOTEL_TZA:'Halopesa'};
+      h.textContent = fb ? '⚠️ Network not detected — defaulting to Tigo Pesa. Please confirm above.' : '📡 Auto-detected: '+nm[d];
+      h.classList.add('on');
+    } else { h.classList.remove('on'); }
+  });
+});
+
+// ─────────────────────────────────────────────────────────────
+// ORDER REFERENCE GENERATOR
+// ─────────────────────────────────────────────────────────────
+function orderRef(){
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let ref = 'ZURI';
+  for(let i=0;i<12;i++) ref += chars.charAt(Math.floor(Math.random()*chars.length));
+  return ref;
+}
+
+// ─────────────────────────────────────────────────────────────
+// PAY — ClickPesa USSD Push flow
+// ─────────────────────────────────────────────────────────────
+async function pay(){
+  const name  = document.getElementById('custName').value.trim();
+  const phone = document.getElementById('phone').value.replace(/\D/g,'');
+  const mno   = document.getElementById('mno').value;
+  const btn   = document.getElementById('payBtn');
+
+  if(!name)              return showToast('Please enter your full name.','error');
+  if(phone.length < 12)  return showToast('Enter a valid number e.g. 255763456789','error');
+  if(!mno)               return showToast('Please select your mobile network.','error');
+  if(cartCount()===0)    return showToast('Your cart is empty. Add services first.','error');
+
+  const cartSnapshot   = {...cart};    // freeze cart state for this payment
+  const total          = cartTotal();
+  const orderReference = orderRef();
+
+  const networkLabels = {
+    VODACOM_TZA:'Vodacom M-Pesa', AIRTEL_TZA:'Airtel Money',
+    TIGO_TZA:'Tigo Pesa / Mixx by Yas', HALOTEL_TZA:'Halopesa'
+  };
+
+  btn.classList.add('loading'); btn.disabled=true;
+  document.getElementById('waitingBox').classList.remove('on');
+  showToast('🔄 Connecting to ClickPesa...','');
+
+  try {
+    // ── STEP 1: Generate JWT Token ─────────────────────────────
+    // POST /generate-token — only client-id + api-key headers, no body
+    const authRes  = await fetch(PROXY(CP_AUTH_URL), {
+      method:'POST',
+      headers:{ 'client-id': CP_CLIENT_ID, 'api-key': CP_API_KEY },
+    });
+    const authText = await authRes.text();
+    if(!authText||authText.trim()==='')
+      throw new Error('Empty response from ClickPesa auth. Check your network.');
+    let authData;
+    try { authData = JSON.parse(authText); }
+    catch(e){ throw new Error('Auth response not JSON: '+authText.substring(0,160)); }
+    if(!authData.success || !authData.token)
+      throw new Error('Auth failed ('+authRes.status+'): '+(authData.message||JSON.stringify(authData)));
+
+    const token = authData.token; // already has "Bearer " prefix per ClickPesa docs
+
+    // ── STEP 2: Initiate USSD Push ─────────────────────────────
+    // Checksum OMITTED — disabled in dashboard
+    const payload = {
+      amount:         String(total),
+      currency:       'TZS',
+      orderReference: orderReference,
+      phoneNumber:    phone,
+    };
+
+    const pushRes  = await fetch(PROXY(CP_USSD_URL), {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization': token,
+        'client-id':    CP_CLIENT_ID,
+      },
+      body: JSON.stringify(payload),
+    });
+    const pushText = await pushRes.text();
+    if(!pushText||pushText.trim()==='')
+      throw new Error('Empty response from ClickPesa. Please try again.');
+    let data;
+    try { data = JSON.parse(pushText); }
+    catch(e){ throw new Error('Push response not JSON: '+pushText.substring(0,160)); }
+
+    if(pushRes.ok && data.id && (data.status==='PROCESSING'||data.status==='SUCCESS')){
+      showToast('📲 USSD prompt sent! Enter your '+networkLabels[mno]+' PIN on your phone.','success');
+      document.getElementById('waitingBox').classList.add('on');
+      // ── STEP 3: Poll until ClickPesa confirms payment received ─
+      pollPaymentStatus(orderReference, token, btn, cartSnapshot, name, phone, networkLabels[mno]);
+    } else {
+      throw new Error(data.message || JSON.stringify(data));
+    }
+
+  } catch(e){
+    showToast('❌ '+e.message,'error');
+    btn.classList.remove('loading'); btn.disabled=false;
+    document.getElementById('waitingBox').classList.remove('on');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// POLL — confirm PAYMENT RECEIVED from ClickPesa
+// Receipt only shown on SUCCESS / SETTLED — i.e. ClickPesa confirmed
+// ─────────────────────────────────────────────────────────────
+async function pollPaymentStatus(orderReference, token, btn, cartSnapshot, customerName, customerPhone, networkLabel){
+  const maxAttempts = 6;   // 6 × 5s = 30 seconds
+  let   attempts    = 0;
+
+  const interval = setInterval(async()=>{
+    attempts++;
+    try {
+      const statusRes  = await fetch(PROXY(CP_STATUS_URL+orderReference), {
+        method:'GET',
+        headers:{ 'Authorization': token, 'client-id': CP_CLIENT_ID },
+      });
+      const statusText = await statusRes.text();
+      const statusData = JSON.parse(statusText);
+      const payment    = Array.isArray(statusData) ? statusData[0] : statusData;
+      const payStatus  = payment?.status;
+
+      if(payStatus==='SUCCESS'||payStatus==='SETTLED'){
+        // ── ClickPesa confirmed PAYMENT RECEIVED ───────────────
+        clearInterval(interval);
+        btn.classList.remove('loading'); btn.disabled=false;
+        document.getElementById('waitingBox').classList.remove('on');
+
+        // clear cart after confirmed payment
+        cart = {};
+        refreshAll();
+
+        // show receipt — only triggered by ClickPesa SUCCESS response
+        showReceipt(payment, orderReference, customerName, customerPhone, networkLabel, cartSnapshot);
+        showToast('✅ Payment confirmed by ClickPesa!','success');
+
+      } else if(payStatus==='FAILED'){
+        clearInterval(interval);
+        btn.classList.remove('loading'); btn.disabled=false;
+        document.getElementById('waitingBox').classList.remove('on');
+        showToast('❌ Payment failed: '+(payment?.message||'You did not complete the payment. Please try again.'),'error');
+
+      } else if(attempts>=maxAttempts){
+        clearInterval(interval);
+        btn.classList.remove('loading'); btn.disabled=false;
+        document.getElementById('waitingBox').classList.remove('on');
+        showToast('⏳ Still waiting for ClickPesa confirmation. If you entered your PIN, your payment is being processed — check your ClickPesa dashboard.','');
+      }
+
+    } catch(e){
+      if(attempts>=maxAttempts){
+        clearInterval(interval);
+        btn.classList.remove('loading'); btn.disabled=false;
+        document.getElementById('waitingBox').classList.remove('on');
+        showToast('❌ Could not confirm payment status. Please check your ClickPesa dashboard.','error');
+      }
+    }
+  }, 5000);
+}
+
+// ─────────────────────────────────────────────────────────────
+// TOAST
+// ─────────────────────────────────────────────────────────────
+function showToast(msg, type){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className   = 'toast '+(type||'');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 7000);
+}
+</script>
+</body>
+</html>
