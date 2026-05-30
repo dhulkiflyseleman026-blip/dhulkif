@@ -728,11 +728,12 @@ async function pay(){
     const firstName = nameParts[0];
     const lastName  = nameParts.slice(1).join(' ') || firstName;
 
-    // Format phone: Pesapal requires + prefix e.g. +255763456789
-    const formattedPhone = phone.startsWith('+') ? phone : '+' + phone;
+    // Format phone: strip any leading + or 0, ensure starts with 255
+    let formattedPhone = phone.replace(/^\+/, '');
+    if(!formattedPhone.startsWith('255')) formattedPhone = '255' + formattedPhone.replace(/^0/, '');
 
-    // Generate a placeholder email using the phone (Pesapal requires phone OR email)
-    const emailFallback = 'customer+' + phone + '@zuricarwash.co.tz';
+    // Valid plain email — no special chars like + which Pesapal rejects
+    const emailFallback = 'pay' + formattedPhone + '@zurigarage.co.tz';
 
     // Save cart snapshot to sessionStorage so callback page can show receipt
     sessionStorage.setItem('pp_cart',     JSON.stringify(cartSnapshot));
