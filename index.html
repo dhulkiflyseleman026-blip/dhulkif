@@ -728,6 +728,12 @@ async function pay(){
     const firstName = nameParts[0];
     const lastName  = nameParts.slice(1).join(' ') || firstName;
 
+    // Format phone: Pesapal requires + prefix e.g. +255763456789
+    const formattedPhone = phone.startsWith('+') ? phone : '+' + phone;
+
+    // Generate a placeholder email using the phone (Pesapal requires phone OR email)
+    const emailFallback = 'customer+' + phone + '@zuricarwash.co.tz';
+
     // Save cart snapshot to sessionStorage so callback page can show receipt
     sessionStorage.setItem('pp_cart',     JSON.stringify(cartSnapshot));
     sessionStorage.setItem('pp_total',    String(total));
@@ -751,10 +757,11 @@ async function pay(){
         callback_url:     CALLBACK_URL,
         notification_id:  ipnId,
         billing_address:  {
-          phone_number: phone,
-          first_name:   firstName,
-          last_name:    lastName,
-          country_code: 'TZ'
+          phone_number:  formattedPhone,
+          email_address: emailFallback,
+          first_name:    firstName,
+          last_name:     lastName,
+          country_code:  'TZ'
         }
       })
     });
